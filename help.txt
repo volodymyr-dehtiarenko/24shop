@@ -1,0 +1,60 @@
+1. Kill PostgreSQL
+   ----------------
+   sudo apt-get --purge remove pgadmin3
+   sudo apt-get --purge remove postgresql\*
+
+   sudo rm -r /etc/postgresql/
+   sudo rm -r /etc/postgresql-common/
+   sudo rm -r /var/lib/postgresql/
+   sudo userdel -r postgres
+   sudo groupdel postgres
+
+2. Gunicorn
+   --------
+   gunicorn --bind 194.182.78.151:8080 --reload wsgi:app
+
+3. Nginx
+   -----
+   sudo ln -s /etc/nginx/sites-available/flask-shop /etc/nginx/sites-enabled
+
+4. Flask
+   -----
+   flask run --host=194.182.78.151
+
+5. Psycopg2
+   --------
+   pip install psycopg2-binary
+
+
+6. Wsgi
+   ----
+   from app import app
+
+   if __name__ == "__main__":
+      app.run()
+
+7. Nginx config
+   ------------
+   server {
+        listen 80;
+        server_name 24shop.sk www.24shop.sk;
+
+   location / {
+        include proxy_params;
+         #proxy_pass http://unix:/var/www/flask-shop/app.sock;
+         proxy_pass http://194.182.78.151:8000;
+         #proxy_set_header Host $host;
+         #proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+         }
+      }
+
+8. PostgreSQL
+   ----------
+   grant all privileges on database db_24shop to admin;
+
+   sudo -i -u postgres
+
+9. GitHub
+   -----------
+   1. 
+
