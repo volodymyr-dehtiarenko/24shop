@@ -202,14 +202,14 @@ class Product(Model):
 
             Item.update_item(target)
 
-    @classmethod
-    def __flush_delete_event__(cls, target):
-        from flaskshop.public.search import Item
+    # @classmethod
+    # def __flush_delete_event__(cls, target):
+    #     from flaskshop.public.search import Item
 
-        super().__flush_delete_event__(target)
-        target.clear_mc(target)
-        target.clear_category_cache(target)
-        Item.delete(target)
+    #     super().__flush_delete_event__(target)
+    #     target.clear_mc(target)
+    #     target.clear_category_cache(target)
+    #     Item.delete(target)
 
 
 class Category(Model):
