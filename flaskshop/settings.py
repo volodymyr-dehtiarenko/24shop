@@ -10,7 +10,7 @@ class DBConfig:
     passwd = os.getenv("DB_PASSWD", "flatron")
     host = os.getenv("DB_HOST", "194.182.78.151")
     port = os.getenv("DB_PORT", 5432)
-    db_name = os.getenv("DB_NAME", "db_24shop")
+    db_name = os.getenv("DB_NAME", "db_24shop_test")
     if db_type == "postgresql":
         db_uri = f"postgresql://{user}:{passwd}@{host}:{port}/{db_name}"
     elif db_type == "mysql":
