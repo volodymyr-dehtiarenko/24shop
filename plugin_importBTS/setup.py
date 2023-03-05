@@ -1,15 +1,15 @@
 from setuptools import find_packages, setup
 
 setup(
-    name="flaskshop-plugin-conversations",
-    version="0.1",
-    description="A private messaging plugin for FlaskShop",
+    name="flaskshop-plugin-import",
+    version="0.2",
+    description="Import data plugin for FlaskShop from BTS",
     url="https://24shop.sk",
     author="Volodymyr Dehtiarenko",
     author_email="volodymyr.dehtiarenko@gmail.com",
     license="MIT",
     packages=find_packages("."),
-    entry_points={"flaskshop_plugins": ["conversations = conversations"]},
+    entry_points={"flaskshop_plugins": ["import BTS = import"]},
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
