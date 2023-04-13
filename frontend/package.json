@@ -1,5 +1,5 @@
 {
-  "name": "flaskshop",
+  "name": "24shop",
   "version": "2.0.0",
   "description": "a shop project with flask",
   "scripts": {
@@ -13,17 +13,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hjlarry/flaskshop.git"
+    "url": "https://github.com/volodymyr-dehtiarenko/24shop.git"
   },
-  "author": "hjlarry",
+  "author": "https://github.com/volodymyr-dehtiarenko",
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=4"
   },
   "bugs": {
-    "url": "https://github.com/hjlarry/flaskshop/issues"
+    "url": "https://github.com/volodymyr-dehtiarenko/24shop.git"
   },
-  "homepage": "https://github.com/hjlarry/flaskshop#readme",
+  "homepage": "",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.2.0",
     "admin-lte": "3.2",
@@ -33,6 +33,7 @@
     "jquery.cookie": "^1.4.1",
     "lazysizes": "^5.3.2",
     "select2": "^4.1.0-rc.0",
+    "slick-carousel": "^1.8.1",
     "svg-injector-2": "^2.1.5",
     "sweetalert": "^2.1.2",
     "wangeditor": "^4.7.15"

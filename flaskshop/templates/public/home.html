@@ -2,53 +2,24 @@
 
 {% block content %}
   <div class="home">
-    <div class="row">
-      <div class="col-sm-12 home__block1">
-        <div class="home--square">
-          <div class="home--content">
-            <div class="home--content-wrapper">
-              <div class="home--content-inner">
-                <h1>{% trans %}Promo & Sale{% endtrans %}</h1>
-                <h2>{% trans %}from the Northpole{% endtrans %}</h2>
-                <a class="btn btn-secondary home__button" href="#">
-                  {% trans %}Shop now{% endtrans %}
-                </a>
-              </div>
+          <div class="slick-slider">
+            <div class="slick-slide">
+              <img src="/static/img/images_carousel/slide1.jpg" alt="img_slider1" class="carousel__img">
+            </div>
+            <div class="slick-slide">
+              <img src="/static/img/images_carousel/slide2.jpeg" alt="img_slider2" class="carousel__img">
+            </div>
+            <div class="slick-slide">
+              <img src="/static/img/images_carousel/slide3.jpg" alt="img_slider3" class="carousel__img">
+            </div>
+            <div class="slick-slide">
+              <img src="/static/img/images_carousel/slide4.jpeg" alt="img_slider4" class="carousel__img">
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12 col-md-6 home__block2">
-        <div class="home--square">
-          <div class="home--content">
-            <div class="home--content-wrapper">
-              <div class="home--content-inner">
-                <h1>{% trans %}Size & Colours{% endtrans %}</h1>
-                <a class="btn btn-secondary home__button" href="#">{% trans %}Shop now{% endtrans %}</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-12 col-md-6 home__block3">
-        <div class="home--square">
-          <div class="home--content">
-            <div class="home--content-wrapper">
-              <div class="home--content-inner">
-                <h1>{% trans %}Digital Downloads{% endtrans %}</h1>
-                <a class="btn btn-secondary home__button" href="#">{% trans %}Shop now{% endtrans %}</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
     {% if products %}
-      <div class="home__featured">
-        <h2 class="text-center">{% trans %}Featured products{% endtrans %}</h2>
-        <div class="row">
+        <div class="home__featured">
+          <h2 class="text-center">{% trans %}Featured products{% endtrans %}</h2>
+          <div class="row">
           {% include('products/_items.html') %}
         </div>
       </div>

@@ -14,3 +14,4 @@ import './components/styleguide';
 import './components/misc';
 import './components/cart';
 import './components/variant-choose';
+import './components/carousel';
