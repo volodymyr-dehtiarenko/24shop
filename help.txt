@@ -54,9 +54,10 @@
 
    sudo -i -u postgres
 
-9. GitHub
+9. Fix bags delete product
    -----------
-
+   https://github.com/hjlarry/flask-shop/issues/101
+   https://github.com/hjlarry/flask-shop/blob/master/flaskshop/product/models.py#L207
    
    
 
