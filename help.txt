@@ -11,7 +11,11 @@
 
 2. Gunicorn
    --------
-   gunicorn --bind 194.182.78.151:8080 --reload wsgi:app
+   Если тайаут нужно:
+   pip install gevent
+   gunicon .... --worker-class gevent
+
+   sudo gunicorn --bind 194.182.78.151:5000 --reload --worker-class gevent wsgi:app
 
 3. Nginx
    -----
@@ -59,5 +63,13 @@
    https://github.com/hjlarry/flask-shop/issues/101
    https://github.com/hjlarry/flask-shop/blob/master/flaskshop/product/models.py#L207
    
-   
+10. npm 
+   -----------------
+   npm install
+   npm run build    
 
+11. SSH
+    ----------------
+
+    ssh-agent sh -c 'ssh-add; ssh-add -L' 
+    посмотреть свой публичній ключ 	

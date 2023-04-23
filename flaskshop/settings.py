@@ -10,7 +10,7 @@ class DBConfig:
     passwd = os.getenv("DB_PASSWD", "flatron")
     host = os.getenv("DB_HOST", "194.182.78.151")
     port = os.getenv("DB_PORT", 5432)
-    db_name = os.getenv("DB_NAME", "db_24shop_test")
+    db_name = os.getenv("DB_NAME", "db_24shop")
     if db_type == "postgresql":
         db_uri = f"postgresql://{user}:{passwd}@{host}:{port}/{db_name}"
     elif db_type == "mysql":
@@ -82,11 +82,11 @@ class Config:
     BABEL_CURRENCY = os.getenv("BABEL_CURRENCY", "EUR")
     
     # MAIL SETTING
-    MAIL_SERVER = os.getenv("MAIL_SERVER", "localhost")
-    MAIL_PORT = os.getenv("MAIL_PORT", 25)
+    MAIL_SERVER = os.getenv("MAIL_SERVER", "imap.gmail.com")
+    MAIL_PORT = os.getenv("MAIL_PORT", 587)
     MAIL_TLS = os.getenv("MAIL_TLS", False)
-    MAIL_USERNAME = os.getenv("MAIL_USERNAME", "")
-    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD", "")
+    MAIL_USERNAME = os.getenv("MAIL_USERNAME", "volodymyr.dehtiarenko@gmail.com")
+    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD", "_Green1975_")
 
     GA_MEASUREMENT_ID = os.getenv("GA_MEASUREMENT_ID", "")
 
