@@ -24,10 +24,8 @@ class DBConfig:
 class Config:
     
     #DEBUG SETTING
-    DEBUG = True
-    TESTING = True
-    FLASKS_RUN_HOST = '194.182.78.151'
-    FLASK_RUN_PORT = '8080'
+    ENV = "dev"
+    FLASK_DEBUG = True
 
     SECRET_KEY = os.getenv("SECRET_KEY", "thisisashop")
     
@@ -91,8 +89,7 @@ class Config:
     GA_MEASUREMENT_ID = os.getenv("GA_MEASUREMENT_ID", "")
 
 
-#class ProdConfig(Config):
-    #ENV = "prod"
-    #ENV = "dev"
-    #FLASK_DEBUG = True
-    #DEBUG_TB_ENABLED = False
+class ProdConfig(Config):
+    ENV = "prod"
+    FLASK_DEBUG = False
+    DEBUG_TB_ENABLED = False

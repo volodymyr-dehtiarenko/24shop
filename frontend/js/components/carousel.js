@@ -25,7 +25,7 @@ $('.slick-slider').slick({
         infinite: true,
         dots: false,
         autoplay: true,
-        slidesToShow: 2,
+        slidesToShow: 1,
         slidesToScroll: 1
       }
     },
