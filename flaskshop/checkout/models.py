@@ -168,8 +168,8 @@ class ShippingMethod(Model):
     price = Column(db.DECIMAL(10, 2))
 
     def __str__(self):
-        return self.title + "   $" + str(self.price)
+        return self.title + "  €" + str(self.price)
 
     @property
     def price_human(self):
-        return "$" + str(self.price)
+        return str(self.price) + " €" 

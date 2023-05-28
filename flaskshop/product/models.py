@@ -22,16 +22,25 @@ MC_KEY_CATEGORY_CHILDREN = "product:category:{}:children"
 class Product(Model):
     __tablename__ = "product_product"
     title = Column(db.String(255), nullable=False)
+    ean = Column(db.Integer(), default=0)
     on_sale = Column(db.Boolean(), default=True)
     rating = Column(db.DECIMAL(8, 2), default=5.0)
     sold_count = Column(db.Integer(), default=0)
+    sklad = Column(db.Integer(), default=0)
     review_count = Column(db.Integer(), default=0)
     basic_price = Column(db.DECIMAL(10, 2))
+    stock_price = Column(db.DECIMAL(10,2))
+    recomm_price = Column(db.DECIMAL(10,2))
     category_id = Column(db.Integer())
     is_featured = Column(db.Boolean(), default=False)
     product_type_id = Column(db.Integer())
     attributes = Column(MutableDict.as_mutable(db.JSON()))
+    leadtime_to_ship = Column(db.Integer())
+    gender = Column(db.Text())
+    manufactured = Column(db.Text())
     description = Column(db.Text())
+    flammable = Column(db.Integer())
+    restricted_countries = Column(db.Integer())
     if Config.USE_REDIS:
         description = PropsItem("description")
 
@@ -88,7 +97,7 @@ class Product(Model):
 
     @property
     def price_human(self):
-        return "$" + str(self.price)
+        return str(self.price) + " €"
 
     @property
     def on_sale_human(self):
@@ -299,8 +308,7 @@ class Category(Model):
         target.clear_mc(target)
 
 
-class ProductTypeAttributes(Model):
-    """存储的产品的属性是包括用户可选和不可选"""
+class ProductTypeAttributes(Model): 
 
     __tablename__ = "product_type_attribute"
     product_type_id = Column(db.Integer())
@@ -308,7 +316,6 @@ class ProductTypeAttributes(Model):
 
 
 class ProductTypeVariantAttributes(Model):
-    """存储的产品SKU的属性是可以给用户去选择的"""
 
     __tablename__ = "product_type_variant_attribute"
     product_type_id = Column(db.Integer())
@@ -412,7 +419,7 @@ class ProductType(Model):
 
 class ProductVariant(Model):
     __tablename__ = "product_variant"
-    sku = Column(db.String(32), unique=True)
+    sku = Column(db.String(32))
     title = Column(db.String(255))
     price_override = Column(db.DECIMAL(10, 2), default=0.00)
     quantity = Column(db.Integer(), default=0)
@@ -429,6 +436,10 @@ class ProductVariant(Model):
     @property
     def sku_id(self):
         return self.sku.split("-")[1]
+
+    @property
+    def sku_id(self):
+        return self.sku
 
     @sku_id.setter
     def sku_id(self, data):
@@ -609,9 +620,13 @@ class ProductImage(Model):
     __tablename__ = "product_image"
     image = Column(db.String(255))
     product_id = Column(db.Integer())
+    
+    # Default code
+    # def __str__(self):
+    #     return url_for("static", filename=self.image, _external=True)
 
     def __str__(self):
-        return url_for("static", filename=self.image, _external=True)
+        return self.image
 
     @staticmethod
     def clear_mc(target):

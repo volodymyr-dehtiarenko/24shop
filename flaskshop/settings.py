@@ -10,7 +10,7 @@ class DBConfig:
     passwd = os.getenv("DB_PASSWD", "flatron")
     host = os.getenv("DB_HOST", "194.182.78.151")
     port = os.getenv("DB_PORT", 5432)
-    db_name = os.getenv("DB_NAME", "db_24shop")
+    db_name = os.getenv("DB_NAME", "db_24shop_new")
     if db_type == "postgresql":
         db_uri = f"postgresql://{user}:{passwd}@{host}:{port}/{db_name}"
     elif db_type == "mysql":
@@ -88,6 +88,14 @@ class Config:
 
     GA_MEASUREMENT_ID = os.getenv("GA_MEASUREMENT_ID", "")
 
+
+    # MIGRATION
+    TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsInN1YiI6OTc2MzU2LCJpYXQiOjE2NzcxODM5MDZ9.CZk2L11F2LdqSO5Ww8ALKJjJcINQWpVN4t9Q4EjY-NA'
+    URL_PRODUCTS =   'https://www.btswholesaler.com/generatefeedbts'
+    URL_CATEGORIES = 'https://www.btswholesaler.com/generatefeedcategoriesbts'
+    USER_ID = '52807223'
+    USER_PASS = 'flatron1975'
+    FORMAT_FEED = 'csv'
 
 class ProdConfig(Config):
     ENV = "prod"

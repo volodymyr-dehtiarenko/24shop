@@ -140,7 +140,7 @@ class Order(Model):
 
     @property
     def total_human(self):
-        return "$" + str(self.total)
+        return str(self.total) + " €"
 
     @classmethod
     def get_current_user_orders(cls):

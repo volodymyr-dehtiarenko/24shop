@@ -11,7 +11,7 @@
 
 2. Gunicorn
    --------
-   Если тайаут нужно:
+   Если тамйаут нужно:
    pip install gevent
    gunicon .... --worker-class gevent
 
@@ -73,3 +73,7 @@
 
     ssh-agent sh -c 'ssh-add; ssh-add -L' 
     посмотреть свой публичній ключ 	
+
+12. pgAdmin 
+   id (product_product)  nextval('product_product_id_seq'::regclass)
+   created_at            CURRENT_TIMESTAMP

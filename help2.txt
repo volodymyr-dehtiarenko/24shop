@@ -1,0 +1,197 @@
+import os, csv
+import pandas as pd
+import psycopg2, requests
+from sqlalchemy import create_engine, Integer, String
+from pathlib import Path
+
+
+
+def download_csv():
+    print("Start download files to Download folder...")
+    products_url = 'https://www.btswholesaler.com/generatefeedbts'
+    data = {'user_id': '52807223', 'pass': 'flatron1975', 'format': 'csv'} 
+    s = requests.get(products_url, params=data) 
+    print(s.status_code, s.url)
+    with open("bts_products.csv", "wb") as file:
+        file.write(s.content)
+    
+
+def import_csv_to_database():
+    print("Start migration files to database...")
+    engine = create_engine("postgresql+psycopg2://admin:flatron@194.182.78.151/db_24shop_new")
+    _path_prod = 'flaskshop/static/download/bts_products.csv'
+    _path_cat = 'flaskshop/static/download/bts_categories.csv'
+    try:
+        if Path(_path_prod) and Path(_path_cat).is_file():
+            df_prod = pd.read_csv('flaskshop/static/download/bts_products.csv', sep=';')
+            df_prod.to_sql("bts_product_import", engine, if_exists='append')
+            df_cat = pd.read_csv('flaskshop/static/download/bts_categories.csv', sep=';') 
+            df_cat.to_sql("bts_categories_import", engine, if_exists='append')
+            print("Products and Categories migration successfully!")
+            migration_csv()
+        else:
+            print("File not exists!")
+            download_csv()   
+    except FileNotFoundError:
+        print("PostgresSQL migration is filed!")       
+    finally:
+        migration_csv()
+
+
+def migration_csv():
+    conn = psycopg2.connect(dbname='db_24shop_new', user='admin', password='flatron', host='194.182.78.151')
+    cursor = conn.cursor()
+    # CATEGORY
+    # cursor.execute("INSERT INTO product_category (id, title, parent_id) SELECT id, name, parent_id FROM bts_categories_import")
+    # print("CATEGORY migration successful!")
+     
+    # CAT_PRODUCT_ID
+    # cursor.execute("INSERT INTO product_product (category_id) SELECT category FROM cat_product_import")
+ 
+    # print("CAT_PRODUCT_ID migration successful!")
+    # cursor.execute("UPDATE product_product SET category_id = (SELECT category FROM bts_prod_cat)")
+    # print("Secsessful")             
+    
+    # cursor.execute("Update product_product set (category_id) from bts_prod_cat)")
+    # print("OK")
+    
+    
+    cursor.execute("INSERT INTO product_product (category_id) SELECT category FROM bts_prod_cat")
+    print("OK")
+
+    # cursor.execute("ALTER TABLE bts_prod_cat ALTER COLUMN category TYPE integer USING(category::integer)")
+    # print("ok")
+
+    
+    # PRODUCT
+    # cursor.execute("INSERT INTO product_product (id, title, sklad, manufactured, ean, gender, leadtime_to_ship, flammable, restricted_countries, description) SELECT id, name, stock, manufacturer, ean,  gender, leadtime_to_ship, flammable, restricted_countries, name FROM bts_product_import")
+    # cursor.execute("INSERT INTO product_product (category_id) SELECT categories FROM bts_product_import")
+    
+    # f = True
+    # t = True
+    # cursor.execute("UPDATE product_product SET rating=9.1, sold_count=0, review_count=5")
+    # cursor.execute("UPDATE product_product SET is_featured='f', on_sale='t', product_type_id = 1")
+    #cursor.execute("UPDATE product_product SET category_id = 0")
+    # print("PRODUCTS migration successful!")
+
+    # PRODUCT variant
+    # cursor.execute("INSERT INTO product_variant (sku, title, quantity, product_id) SELECT ean, name, stock, id FROM bts_product_import ")
+    # print("PRODUCT VARIANT migration successful!") 
+    
+    # IMAGES
+    # cursor.execute("INSERT INTO product_image (product_id, image) SELECT id, image FROM bts_product_import")
+    # print("IMAGES migration successful!")
+    
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+
+def import_cat_product_csv():
+    print("Start migration files to database...")
+    engine = create_engine("postgresql+psycopg2://admin:flatron@194.182.78.151/db_24shop_new")
+    _path_cat = 'flaskshop/static/download/bts_prod_cat.csv'
+    try:
+        if Path(_path_cat).is_file():
+            df_cat_prod = pd.read_csv('flaskshop/static/download/bts_prod_cat.csv', sep=';')
+            df_cat_prod.to_sql("bts_prod_cat", engine, if_exists='append', index=False,  dtype={'category': Integer()})
+            print("Products and Categories migration successfully!")
+            migration_csv()
+        else:
+            print("File not exists!")
+           
+     
+    except FileNotFoundError:
+        print("PostgresSQL migration is filed!")       
+    finally:
+        migration_csv()
+
+
+if __name__ == "__main__":
+    # download_csv()
+    # import_csv()
+    migration_csv()
+    #import_cat_product_csv()
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+import os, csv
+import pandas as pd
+import psycopg2, requests
+from sqlalchemy import create_engine, Integer, String
+from pathlib import Path
+
+
+
+engine = create_engine("postgresql+psycopg2://admin:flatron@194.182.78.151/db_24shop_new")
+conn = psycopg2.connect(dbname='db_24shop_new', user='admin', password='flatron', host='194.182.78.151')
+cursor = conn.cursor()
+
+
+# Download csv files from BTS site
+def download_csv():
+    print("Start download files to Download folder...")
+    products_url = 'https://www.btswholesaler.com/generatefeedbts'
+    data = {'user_id': '52807223', 'pass': 'flatron1975', 'format': 'csv'}
+    s = requests.get(products_url, params=data)
+    print(s.status_code, s.url)
+    with open("bts_products.csv", "wb") as file:
+        file.write(s.content)
+
+
+# Import csv to database
+def import_csv_to_database():
+    print("Start migration files to database...")
+    _path_prod = 'flaskshop/static/download/bts_products.csv'
+    _path_cat = 'flaskshop/static/download/bts_categories.csv'
+    try:
+        if Path(_path_prod) and Path(_path_cat).is_file():
+            df_prod = pd.read_csv('flaskshop/static/download/bts_products.csv', sep=';')
+            df_prod.to_sql("bts_product_import", engine, if_exists='append')
+            df_cat = pd.read_csv('flaskshop/static/download/bts_categories.csv', sep=';')
+            df_cat.to_sql("bts_categories_import", engine, if_exists='append')
+            print("Products and Categories migration successfully!")
+            migration_csv()
+        else:
+            print("File not exists!")
+            download_csv()
+    except FileNotFoundError:
+        print("PostgresSQL migration is filed!")
+    finally:
+        migration_csv()
+
+
+# Migration information
+def migration_csv():
+    p = Products.query.all()
+    print(p)
+
+
+if __name__ == "__main__":
+    migration_csv()
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+from sqlalchemy import create_engine, MetaData, Table, Column, update, select
+from sqlalchemy.orm import Session, sessionmaker, mapper
+import csv
+
+
+engine = create_engine("postgresql+psycopg2://admin:flatron@194.182.78.151/db_24shop_new")
+Session=sessionmaker(autoflush=True, bind=engine)
+metadata = MetaData(engine)
+
+bts_category_id = engine.execute("SELECT categories FROM bts_product_import")
+pp_category_id = engine.execute("SELECT category_id FROM product_product")
+
+
+        
+db = Session(autoflush=False, bind=engine)
+product_product = Table('product_product', metadata, Column('category_id'))
+f = open("bts_prod_cat.csv", "w")  
+for row in bts_category_id:
+    for i in row:
+        if i == None:
+            f.write('39756' + ';' + '\n')
+            continue
+        cat_id = (i[-5:])
+        f.write(cat_id + ';' + '\n')
